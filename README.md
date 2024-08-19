@@ -69,7 +69,7 @@ A filter kernel for Gaussian smoothing is shown in the next figure. The figure s
 
 ![image](https://github.com/user-attachments/assets/820a1345-9770-4291-98c4-c505877cbe4d)
 
-#### Illustration for applying Derivatives for Edge detection
+#### Illustration of Applying Derivatives for Edge Detection
 
 We apply the first and second derivatives to the intensity curve obtained by comparing the intensity values, resulting in a curve like the one given below:
 
