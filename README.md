@@ -1,4 +1,4 @@
-##Intensity Gradient and Filtering - Locating Keypoints in an Image
+## Intensity Gradient and Filtering - Locating Keypoints in an Image
 
 The first step in the tracking process is locating keypoints in an image. Most types of keypoints rely on how brightness information is spread across the image. Locations where it changes quickly are considered to have a high intensity gradient, making them potential keypoints.
 
