@@ -79,10 +79,54 @@ We apply the first and second derivatives to the intensity curve obtained by com
 For the first derivative, the locations of edges are determined by their local extrema. For the second derivative, the locations of the edges are determined by their zero crossings.
 
 
+## Computing the Intensity Gradient
+
+After gently smoothing the image to minimize noise, we can compute the intensity gradient in both the x and y directions. There are various methods used for gradient computation. One of the most well-known methods is the `Sobel` operator (introduced in 1968), though other options, like the `Scharr` operator, optimized for rotational symmetry, are also available.
+
+The Sobel operator is based on applying small integer-valued filters both in horizontal and vertical direction. The operators are 3x3 kernels, one for the gradient in x and one for the gradient in y. Both kernels are shown below.
+
+![image](https://github.com/user-attachments/assets/4ca1b52b-753f-4965-8e7d-885cce3fd4bc)
+
+In the following code, one kernel of the Sobel operator is applied to an image. Note that it has been converted to grayscale to avoid computing the operator on each color channel. This code can be found in the gradient_sobel.cpp file.
 
 
+```ruby
+
+ // load image from file
+    cv::Mat img;
+    img = cv::imread("./img1.png");
+
+    // convert image to grayscale
+    cv::Mat imgGray;
+    cv::cvtColor(img, imgGray, cv::COLOR_BGR2GRAY);
+
+    // create filter kernel
+    float sobel_x[9] = {-1, 0, +1,
+                        -2, 0, +2, 
+                        -1, 0, +1};
+    cv::Mat kernel_x = cv::Mat(3, 3, CV_32F, sobel_x);
+
+    // apply filter
+    cv::Mat result_x;
+    cv::filter2D(imgGray, result_x, -1, kernel_x, cv::Point(-1, -1), 0, cv::BORDER_DEFAULT);
+
+    // show result
+    string windowName = "Sobel operator (x-direction)";
+    cv::namedWindow( windowName, 1 ); // create window 
+    cv::imshow(windowName, result_x);
+    cv::waitKey(0); // wait for keyboard input before continuing
+
+```
+
+The gradient image produced is displayed below. It illustrates that regions with strong local contrast, such as the cast shadow of the preceding vehicle, result in high values in the filtered image.
+
+![image](https://github.com/user-attachments/assets/28fdf8d2-5dc2-4b00-8f7a-1f14816dd803)
 
 
+Note that in the above code, only the Sx filter kernel has been applied for now, which is why the cast shadow only shows in x direction. Applying Sy to the image yields the following result:
+
+
+![image](https://github.com/user-attachments/assets/1a5926f7-77ee-414f-86c8-8f6300b1082a)
 
 
 
